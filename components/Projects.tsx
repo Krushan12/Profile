@@ -11,6 +11,8 @@ import {
   SiMongodb,
   SiVercel,
   SiTypescript,
+  SiStripe,
+  SiCloudinary,
 } from "react-icons/si"
 import { ExternalLink, Code, Eye } from "lucide-react"
 
@@ -23,50 +25,59 @@ interface Project {
 }
 
 export default function Projects() {
-  const [activeTab, setActiveTab] = useState<"fullstack" | "mini" | "landing">("fullstack")
   const [, setHoveredIndex] = useState<number | null>(null)
 
-  const projects: Record<string, Project[]> = {
-    fullstack: [
-      {
-        title: "Vibely",
-        url: "https://vibely-liart.vercel.app/",
-        github: "https://github.com/Krushan12", // replace with Vibely GitHub repo if different
-        imageUrl: "https://via.placeholder.com/600x400?text=Vibely+Project", // 📝 Replace with a real image URL if available
-        techStack: ["React", "Express", "Node.js", "MongoDB", "Tailwind CSS"],
-      },
-      {
-        title: "Kanban Board",
-        url: "", // 📝 Add the live URL of your Kanban Board if deployed
-        github: "", // 📝 Add the GitHub repo URL for the Kanban Board project
-        imageUrl: "https://via.placeholder.com/600x400?text=Kanban+Board", // 📝 Replace with a real image URL if available
-        techStack: ["React", "Tailwind CSS"],
-      },
-    ],
-    mini: [
-      // 📝 Add mini projects here
-    ],
-    landing: [
-      // 📝 Add landing page projects here
-    ],
-  }
+  const projects: Project[] = [
+    {
+      title: "Vibely",
+      url: "https://vibely-liart.vercel.app/",
+      github: "https://github.com/Krushan12/Vibely",
+      imageUrl: "/projects/vibely.png",
+      techStack: ["React", "Express", "Node.js", "MongoDB", "Tailwind CSS"],
+    },
+    {
+      title: "Phoge",
+      url: "https://phoge.vercel.app/",
+      github: "https://github.com/Krushan12/phoge",
+      imageUrl: "/projects/phoge.png",
+      techStack: ["Next.js", "TypeScript", "MongoDB", "Clerk", "Cloudinary", "Stripe", "Shadcn"],
+    },
+    {
+      title: "Kanban Board",
+      url: "https://kanban-board-teal-pi.vercel.app/",
+      github: "https://github.com/Krushan12/Kanban-board",
+      imageUrl: "/projects/kanbanboard.png",
+      techStack: ["React", "Tailwind CSS"],
+    },
+    {
+      title: "Web Profile",
+      url: "https://profile-mu-silk.vercel.app/",
+      github: "https://github.com/Krushan12/profile",
+      imageUrl: "/projects/webprofile.png",
+      techStack: ["Next.js", "Tailwind CSS", "Magic UI"],
+    },
+  ]
 
   const getTechIcon = (tech: string) => {
-    switch (tech) {
-      case "Next.js":
+    switch (tech.toLowerCase()) {
+      case "next.js":
         return <SiNextdotjs className="text-white" />
-      case "React":
+      case "react":
         return <SiReact className="text-cyan-400" />
-      case "Node.js":
+      case "node.js":
         return <SiNodedotjs className="text-green-500" />
-      case "Express":
+      case "express":
         return <SiExpress className="text-white" />
-      case "MongoDB":
+      case "mongodb":
         return <SiMongodb className="text-green-700" />
-      case "Tailwind CSS":
+      case "tailwind css":
         return <SiTailwindcss className="text-blue-500" />
-      case "TypeScript":
+      case "typescript":
         return <SiTypescript className="text-blue-600" />
+      case "stripe":
+        return <SiStripe className="text-purple-500" />
+      case "cloudinary":
+        return <SiCloudinary className="text-blue-400" />
       default:
         return <SiVercel className="text-white" />
     }
@@ -95,30 +106,12 @@ export default function Projects() {
             </h2>
           </motion.div>
           <p className="text-gray-400 max-w-lg mx-auto text-sm md:text-base">
-            A showcase of my web development journey, featuring full-stack applications, mini projects, and landing pages.
+            A showcase of my web development projects, from full-stack applications to interactive web experiences.
           </p>
         </div>
 
-        <div className="flex justify-center rounded-xl mb-10">
-          <div className="inline-flex p-1 bg-gray-900/50 rounded-xl">
-            {(["fullstack", "mini", "landing"] as const).map((tab) => (
-              <button
-                key={tab}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  activeTab === tab
-                    ? "bg-blue-500 text-white shadow-lg rounded-xl shadow-blue-500/20"
-                    : "text-gray-400 hover:text-white"
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab === "fullstack" ? "Fullstack Projects" : tab === "mini" ? "Mini Projects" : "Landing Pages"}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {projects[activeTab].map((project, index) => (
+          {projects.map((project, index) => (
             <div
               key={index}
               className="group cursor-pointer transform transition-all duration-300 hover:-translate-y-1"
@@ -128,22 +121,24 @@ export default function Projects() {
               <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800/50 h-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
                 <div className="relative aspect-video overflow-hidden">
                   <img
-                    src={project.imageUrl || "/placeholder.svg"}
+                    src={project.imageUrl}
                     alt={project.title}
                     className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-80"></div>
                   <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 bg-blue-500/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
-                      aria-label={`Visit ${project.title}`}
-                    >
-                      <Eye className="w-4 h-4" />
-                    </a>
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 bg-blue-500/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+                        aria-label={`Visit ${project.title}`}
+                      >
+                        <Eye className="w-4 h-4" />
+                      </a>
+                    )}
                     <a
                       href={project.github}
                       target="_blank"
@@ -161,17 +156,23 @@ export default function Projects() {
                     <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-blue-400 transition-colors"
-                      aria-label={`External link to ${project.title}`}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-blue-400 transition-colors"
+                        aria-label={`External link to ${project.title}`}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
                   </div>
-                  <p className="text-gray-500 text-xs mb-3 truncate">{project.url.replace("http://", "")}</p>
+                  {project.url && (
+                    <p className="text-gray-500 text-xs mb-3 truncate">
+                      {project.url.replace(/(^\w+:|^)\/\//, '')}
+                    </p>
+                  )}
                   <div className="flex flex-wrap gap-1.5">
                     {project.techStack.map((tech, i) => (
                       <div
