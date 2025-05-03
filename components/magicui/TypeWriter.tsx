@@ -17,7 +17,7 @@ export function TypewriterEffectSmoothDemo() {
     <div className="flex flex-col items-center justify-center h-[10rem]  ">
       <TypewriterEffectSmooth words={words} className="text-white" />
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-        <Link href="https://drive.google.com/file/d/1DMdBfKIm_AizjX5qcfhoJApcGYEEUuBF/view?usp=sharing">
+        <Link href="https://drive.google.com/file/d/1fB8Kvp3_J4CdUNWVIPhYQUz8N_uWO-Zd/view?usp=sharing">
         <button className="w-40 h-10 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-sm transition-all duration-300">
   Download CV
 </button>
